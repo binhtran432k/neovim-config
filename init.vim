@@ -1,7 +1,9 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VimPlug for managing Plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""
-call plug#begin('~/.config/nvim/plugged')
+let config_folder = '~/.config/nvim'                    " Set config folder
+
+call plug#begin(config_folder.'/plugged')
 
     "(( Theme ))
     Plug 'Mofiqul/dracula.nvim'                         " Dracula theme
@@ -30,6 +32,8 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'mattn/emmet-vim'                              " Emmet for neovim
 
     "(( Code syntax highlight ))
+    Plug 'luochen1990/rainbow'                          " Bracket rainbow
+    Plug 'lukas-reineke/indent-blankline.nvim'          " Indent rainbow
 
     "(( Debugging ))
     Plug 'puremourning/vimspector'                      " Vimspector
@@ -37,68 +41,60 @@ call plug#begin('~/.config/nvim/plugged')
     "(( Source code version control ))
     Plug 'tpope/vim-fugitive'                           " Git
 
-    "((  ))
-    Plug 'neovim/nvim-lspconfig'
-
 call plug#end()
 
 """"""""""""""""""""""""""""""""""""""""""""""
 " => General settings
 """"""""""""""""""""""""""""""""""""""""""""""
-set mouse=a
+set cursorline
+set cursorcolumn
+set mouse=a " Make text can select by mouse
+
+" Make tabstop to 4 space
 set tabstop=4
 set shiftwidth=4
 set expandtab
+
+" Make fold by indent
 set foldmethod=indent
-set number
 set foldlevelstart=99
-syntax on
-set ignorecase
+
+set number " Show line number
+set list listchars=eol:↴,space:.,tab:\>\ 
+set termguicolors
+
+let mapleader = ',' " Change leader key
+inoremap <S-Tab> <C-V><Tab>
+
+" Make neovim save last cursor position
+" autocmd BufReadPost * if @% !~# '\.git[\/\\]COMMIT_EDITMSG$' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+set viewoptions-=options
+augroup remember_folds
+    autocmd!
+    autocmd BufWinLeave *.* if &ft !=# 'help' | mkview | endif
+    autocmd BufWinEnter *.* if &ft !=# 'help' | silent! loadview | endif
+augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""
-" => General settings
+" => Theme
 """"""""""""""""""""""""""""""""""""""""""""""
 colorscheme dracula " Using dracula:
+"set list listchars=space:.,tab:\>\ 
+highlight IndentBlanklineIndent1 guifg=#E06C75 blend=nocombine
+highlight IndentBlanklineIndent2 guifg=#E5C07B blend=nocombine
+highlight IndentBlanklineIndent3 guifg=#98C379 blend=nocombine
+highlight IndentBlanklineIndent4 guifg=#56B6C2 blend=nocombine
+highlight IndentBlanklineIndent5 guifg=#61AFEF blend=nocombine
+highlight IndentBlanklineIndent6 guifg=#C678DD blend=nocombine
+
+let g:indent_blankline_space_char_blankline = ' '
+let g:indent_blankline_char_highlight_list = ['IndentBlanklineIndent1', 'IndentBlanklineIndent2', 'IndentBlanklineIndent3', 'IndentBlanklineIndent4', 'IndentBlanklineIndent5', 'IndentBlanklineIndent6']
+
+let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
 
 """"""""""""""""""""""""""""""""""""""""""""""
-" => General settings
+" => Other settings
 """"""""""""""""""""""""""""""""""""""""""""""
-" Map key for NERDTree
-nnoremap <leader>n :NERDTreeFocus<CR>
-nnoremap <C-n> :NERDTree<CR>
-nnoremap <C-t> :NERDTreeToggle<CR>
-nnoremap <C-f> :NERDTreeFind<CR>
-
-" Exit Vim if NERDTree is the only window remaining in the only tab.
-autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
-
-
-if exists('g:vscode')
-    " Make fold in vscode
-    " Support k/j with fold
-    nnoremap k :<C-u>call VSCodeCall('cursorMove', { 'to': 'up', 'by': 'wrappedLine', 'value': v:count ? v:count : 1 })<CR>
-    nnoremap j :<C-u>call VSCodeCall('cursorMove', { 'to': 'down', 'by': 'wrappedLine', 'value': v:count ? v:count : 1 })<CR>
-    " Support for fold
-    nnoremap <silent> za <Cmd>call VSCodeNotify('editor.toggleFold')<CR>
-    nnoremap <silent> zR <Cmd>call VSCodeNotify('editor.unfoldAll')<CR>
-    nnoremap <silent> zM <Cmd>call VSCodeNotify('editor.foldAll')<CR>
-    nnoremap <silent> zo <Cmd>call VSCodeNotify('editor.unfold')<CR>
-    nnoremap <silent> zO <Cmd>call VSCodeNotify('editor.unfoldRecursively')<CR>
-    nnoremap <silent> zc <Cmd>call VSCodeNotify('editor.fold')<CR>
-    nnoremap <silent> zC <Cmd>call VSCodeNotify('editor.foldRecursively')<CR>
-
-    nnoremap <silent> z1 <Cmd>call VSCodeNotify('editor.foldLevel1')<CR>
-    nnoremap <silent> z2 <Cmd>call VSCodeNotify('editor.foldLevel2')<CR>
-    nnoremap <silent> z3 <Cmd>call VSCodeNotify('editor.foldLevel3')<CR>
-    nnoremap <silent> z4 <Cmd>call VSCodeNotify('editor.foldLevel4')<CR>
-    nnoremap <silent> z5 <Cmd>call VSCodeNotify('editor.foldLevel5')<CR>
-    nnoremap <silent> z6 <Cmd>call VSCodeNotify('editor.foldLevel6')<CR>
-    nnoremap <silent> z7 <Cmd>call VSCodeNotify('editor.foldLevel7')<CR>
-
-    xnoremap <silent> zV <Cmd>call VSCodeNotify('editor.foldAllExcept')<CR>
-    " Support comment
-    xmap gc  <Plug>VSCodeCommentary
-    nmap gc  <Plug>VSCodeCommentary
-    omap gc  <Plug>VSCodeCommentary
-    nmap gcc <Plug>VSCodeCommentaryLine
-endif
+execute 'source '.config_folder.'/settings/nerdtree.vim'
+execute 'source '.config_folder.'/settings/im.vim'
+execute 'source '.config_folder.'/settings/vimspector.vim'
