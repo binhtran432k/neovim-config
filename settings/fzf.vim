@@ -1,8 +1,8 @@
 " This is the default extra key bindings
 let g:fzf_action = {
       \ 'ctrl-t': 'tab split',
-      \ 'ctrl-x': 'split',
-      \ 'ctrl-v': 'vsplit' }
+      \ 'ctrl-i': 'split',
+      \ 'ctrl-s': 'vsplit' }
 
 " - Popup window (anchored to the bottom of the current window)
 let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.6, 'relative': v:true } }
@@ -24,7 +24,8 @@ let g:fzf_colors =
       \ 'spinner': ['fg', 'Label'],
       \ 'header':  ['fg', 'Comment'] }
 
-nnoremap <silent> <leader>ee :Files<CR>
-nnoremap <silent> <leader>eh :History<CR>
-nnoremap <silent> <leader>eb :Buffers<CR>
-nnoremap <silent> <leader>eg :Rg<CR>
+nnoremap <silent> <leader>oo :Files<CR>
+nnoremap <silent> <leader>oh :History<CR>
+nnoremap <silent> <leader>ob :Buffers<CR>
+nnoremap <silent> <leader>ot :Windows<CR>
+nnoremap <silent> <leader>og :Ag<CR>

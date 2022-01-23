@@ -11,6 +11,9 @@ endif
 
 set nocompatible
 
+" (( Disable polyglot autoindent ))
+let g:polyglot_disabled = ['autoindent']
+
 call plug#begin(nvim_config_dir.'/plugged')
 
 "(( Theme ))
@@ -22,6 +25,7 @@ Plug 'PhilRunninger/nerdtree-visual-selection' " NERDTree multiple file edit
 Plug 'Xuyuanp/nerdtree-git-plugin'             " NERDTree Git status
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight' " NERDTree syntax highlight
 Plug 'ryanoasis/vim-devicons'                  " Vim-devicons Icon
+Plug 'Lokaltog/neoranger'
 
 "(( File search ))
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " Fuzzy finder
@@ -39,12 +43,16 @@ Plug 'jiangmiao/auto-pairs'                     " Auto pairs
 Plug 'alvan/vim-closetag'                       " Vim Closetag
 Plug 'tpope/vim-surround'                       " For easy to change surround
 Plug 'junegunn/vim-easy-align'                  " For easy to change align
+Plug 'bkad/CamelCaseMotion'                     " For camel motion in vim
 Plug 'kana/vim-textobj-user'                    " For custom select object
 Plug 'kana/vim-textobj-entire'                  " For selecting all file
 Plug 'wellle/targets.vim'                       " For advance select object
-Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-commentary'                     " For easy comment
 Plug 'honza/vim-snippets'                       " Snippets for vim
 Plug 'captbaritone/better-indent-support-for-php-with-html'
+Plug 'easymotion/vim-easymotion'                " Easy motion
+Plug 'terryma/vim-expand-region'                " Expand selection
+Plug 'triglav/vim-visual-increment'
 " Plug 'prettier/vim-prettier'
 
 "(( Special extension ))
@@ -55,6 +63,8 @@ Plug 'weirongxu/plantuml-previewer.vim' " Plantuml previewer
 "(( Code syntax highlight ))
 Plug 'lukas-reineke/indent-blankline.nvim' " Indent rainbow
 Plug 'sheerun/vim-polyglot'                " For almost language syntax support
+Plug 'Darazaki/indent-o-matic'             " For fast auto detect indent
+Plug 'binhtran432k/vim-restclient-syntax'  " For http syntax support
 
 "(( Debugging ))
 Plug 'puremourning/vimspector' " Vimspector
@@ -64,26 +74,63 @@ Plug 'tpope/vim-fugitive'                           " Git
 
 call plug#end()
 
+
 """"""""""""""""""""""""""""""""""""""""""""""
 " => Coc Extension List
 """"""""""""""""""""""""""""""""""""""""""""""
+"(( For all ))
 let g:coc_global_extensions = [
+  \ 'coc-highlight',
+  \ 'coc-snippets',
+  \ 'coc-lightbulb',
+  \ 'coc-spell-checker',
+\ ]
+
+"(( For c/c++ ))
+let g:coc_global_extensions += [
+  \ 'coc-clangd',
+\ ]
+
+"(( For css ))
+let g:coc_global_extensions += [
   \ 'coc-css',
   \ 'coc-cssmodules',
+  \ 'coc-stylelintplus',
+\ ]
+
+"(( For html ))
+let g:coc_global_extensions += [
   \ 'coc-emmet',
-  \ 'coc-eslint',
   \ 'coc-html',
   \ 'coc-htmlhint',
   \ 'coc-html-css-support',
-  \ 'coc-highlight',
-  \ 'coc-json',
-  \ 'coc-phpls',
-  \ 'coc-php-cs-fixer',
-  \ 'coc-snippets',
-  \ 'coc-stylelintplus',
+\ ]
+
+"(( For http ))
+let g:coc_global_extensions += [
+  \ 'coc-restclient',
+\ ]
+
+"(( For javascript/typescript ))
+let g:coc_global_extensions += [
+  \ 'coc-eslint',
   \ 'coc-tsserver',
-  \ 'coc-vimtex'
-\]
+\ ]
+
+"(( For json ))
+let g:coc_global_extensions += [
+  \ 'coc-json',
+\ ]
+
+"(( For latex ))
+let g:coc_global_extensions += [
+  \ 'coc-vimtex',
+\ ]
+
+"(( For php ))
+let g:coc_global_extensions += [
+  \ 'coc-phpls',
+\ ]
 
 
 """"""""""""""""""""""""""""""""""""""""""""""
@@ -91,19 +138,23 @@ let g:coc_global_extensions = [
 """"""""""""""""""""""""""""""""""""""""""""""
 " search ignore sensitive
 set ignorecase
+set smartcase
 " set cursorcolumn
 set cursorline
 set guicursor=n-c:block,i-ci-ve:ver40,r-cr-v:hor20,o:hor50,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,sm:block-blinkwait175-blinkoff150-blinkon175
 set mouse=a " Make text can select by mouse
 
+set nrformats=alpha,bin,hex
+
 " Make tabstop to 4 space
-" set tabstop=4 softtabstop=4 shiftwidth=4 expandtab smarttab
+set tabstop=4 softtabstop=4 shiftwidth=4 expandtab smarttab
 
 " Make fold by indent
 set foldmethod=indent
 set foldlevelstart=99
 
 set number " Show line number
+set relativenumber
 " Highlight problematic whitespace
 set list listchars=tab:›\ ,trail:•,extends:#,nbsp:.,space:⋅,eol:↴
 "set list listchars=space:.,tab:\>\ 
@@ -118,12 +169,12 @@ augroup remember_folds
 augroup END
 
 " Auto reload content changed outside
-au CursorHold,CursorHoldI * checktime
-au FocusGained,BufEnter * :checktime
-autocmd FocusGained,BufEnter,CursorHold,CursorHoldI *
-  \ if mode() !~ '\v(c|r.?|!|t)' && getcmdwintype() == '' | checktime | endif
-autocmd FileChangedShellPost *
-  \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
+" au CursorHold,CursorHoldI * checktime
+" au FocusGained,BufEnter * :checktime
+" autocmd FocusGained,BufEnter,CursorHold,CursorHoldI *
+"   \ if mode() !~ '\v(c|r.?|!|t)' && getcmdwintype() == '' | checktime | endif
+" autocmd FileChangedShellPost *
+"   \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
 
 " Disable automatic comment in newline
 " autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
@@ -160,28 +211,27 @@ let g:airline_right_alt_sep = '│'
 let g:airline#extensions#whitespace#enabled = 0                     " Remove warning whitespace
 
 " Rainbow Indent
-highlight IndentBlanklineIndent1 guifg=#E06C75 blend=nocombine
-highlight IndentBlanklineIndent2 guifg=#E5C07B blend=nocombine
-highlight IndentBlanklineIndent3 guifg=#98C379 blend=nocombine
-highlight IndentBlanklineIndent4 guifg=#56B6C2 blend=nocombine
-highlight IndentBlanklineIndent5 guifg=#61AFEF blend=nocombine
-highlight IndentBlanklineIndent6 guifg=#C678DD blend=nocombine
-
 let g:indent_blankline_space_char_blankline = ' '
-let g:indent_blankline_char_highlight_list = ['IndentBlanklineIndent1', 'IndentBlanklineIndent2', 'IndentBlanklineIndent3', 'IndentBlanklineIndent4', 'IndentBlanklineIndent5', 'IndentBlanklineIndent6']
+let g:indent_blankline_char_highlight_list = ['Error', 'String', 'Function', 'Type', 'Keyword', 'Constant']
+let g:indent_blankline_show_trailing_blankline_indent = v:false
+let g:indent_blankline_filetype_exclude = ['help', 'nerdtree']
+let g:indent_blankline_buftype_exclude = ['terminal']
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Key mappings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
 let mapleader = ',' " Change leader key
+" Map localleader for latex shortkey
+let maplocalleader = "\;"
+let g:camelcasemotion_key = '<leader>' " For Camel motion
 tnoremap <leader>, ,
 inoremap <S-Tab> <C-V><Tab>
 
 " Window moving
-noremap <C-h> <C-w>h
-noremap <C-j> <C-w>j
-noremap <C-k> <C-w>k
-noremap <C-l> <C-w>l
+" noremap <C-h> <C-w>h
+" noremap <C-j> <C-w>j
+" noremap <C-k> <C-w>k
+" noremap <C-l> <C-w>l
 
 " Resize pane
 nnoremap <M-Right> :<C-u>vertical resize +1<CR>
@@ -192,37 +242,37 @@ nnoremap <M-Up> :<C-u>resize -1<CR>
 " Search a hightlighted text
 vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
 
-" Dehightlight text after press <cr>
+" DeHighlight text after press <cr>
 " nnoremap <CR> :<C-u>nohl<CR><CR>
 nnoremap <silent><expr> <CR>
   \ (&hlsearch && v:hlsearch) ? ":\<C-u>nohl\<CR>" :
   \ "\<CR>"
 
 " Indent Converter Command
-func! s:indent_converter(action, ...)
-  if (a:0 == 2 || a:0 == 1 || a:0 == 0)
-    let l:toNum = a:0 > 0? a:1 : 4
-    let l:fromNum = a:0 == 2? a:2 : &shiftwidth
-    let l:savedView = winsaveview()
-    if (a:action == 'space')
-      if (&expandtab)
-        execute '%s@^\( \{'.l:fromNum.'}\)\+@\=repeat(" ", len(submatch(0))*'.l:toNum.'/'.l:fromNum.')@'
-      else
-        execute '%s@^\t\+@\=repeat(" ", len(submatch(0))*'.l:toNum.')@'
-      endif
-      execute 'set ts='.l:toNum.' sts='.l:toNum.' sw='.l:toNum.' et'
-    elseif (a:action == 'tab')
-      if (&expandtab)
-        execute '%s@^\( \{'.l:fromNum.'}\)\+@\=repeat("\t", len(submatch(0))/'.l:fromNum.')@'
-      endif
-      execute 'set ts='.l:toNum.' sts='.l:toNum.' sw='.l:toNum.' noet'
+func! s:indent_converter(fromIndent, toIndent, ...)
+  let l:fromNum = a:1
+  let l:toNum = a:2
+  let l:savedView = winsaveview()
+  if (a:toIndent == 'space')
+    if (a:fromIndent == 'space')
+      execute '%s@^\( \{'.l:fromNum.'}\)\+@\=repeat(" ", len(submatch(0))*'.l:toNum.'/'.l:fromNum.')@'
+    elseif (a:fromIndent == 'tab')
+      execute '%s@^\t\+@\=repeat(" ", len(submatch(0))*'.l:toNum.')@'
     endif
-    call winrestview(l:savedView)
+    execute 'set ts='.l:toNum.' sts='.l:toNum.' sw='.l:toNum.' et'
+  elseif (a:toIndent == 'tab')
+    if (a:fromIndent == 'space')
+      execute '%s@^\( \{'.l:fromNum.'}\)\+@\=repeat("\t", len(submatch(0))/'.l:fromNum.')@'
+    endif
+    execute 'set ts='.l:toNum.' sts='.l:toNum.' sw='.l:toNum.' noet'
   endif
+  call winrestview(l:savedView)
 endfunction
 
-command! -nargs=* IndentToSpace :call s:indent_converter('space', <f-args>)
-command! -nargs=* IndentToTab :call s:indent_converter('tab', <f-args>)
+command! -nargs=* SpaceToSpace :call s:indent_converter('space', 'space', <f-args>)
+command! -nargs=* SpaceToTab :call s:indent_converter('space', 'tab', <f-args>)
+command! -nargs=* TabToSpace :call s:indent_converter('tab', 'space', <f-args>)
+command! -nargs=* TabToTab :call s:indent_converter('tab', 'tab', <f-args>)
 
 
 """"""""""""""""""""""""""""""""""""""""""""""
@@ -232,16 +282,29 @@ let nvim_settings_dir = nvim_config_dir.'settings/'
 
 execute 'source '.nvim_settings_dir.'coc.vim'
 execute 'source '.nvim_settings_dir.'easy-align.vim'
+execute 'source '.nvim_settings_dir.'easy-motion.vim'
 execute 'source '.nvim_settings_dir.'floaterm.vim'
 execute 'source '.nvim_settings_dir.'fzf.vim'
 execute 'source '.nvim_settings_dir.'ibus.vim'
 execute 'source '.nvim_settings_dir.'keymap.vim'
+execute 'source '.nvim_settings_dir.'neoranger.vim'
 execute 'source '.nvim_settings_dir.'nerdtree.vim'
 execute 'source '.nvim_settings_dir.'vimspector.vim'
 execute 'source '.nvim_settings_dir.'vimtex.vim'
+execute 'source '.nvim_settings_dir.'indent-o-matic.vim'
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Other scripts 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
 " let nvim_scripts_dir = nvim_config_dir.'scripts/'
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Fix conflict 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
+" (( Fix vimtex ))
+autocmd FileType tex xmap ae <plug>(vimtex-ae)
+autocmd FileType tex xmap ie <plug>(vimtex-ie)
+autocmd FileType tex xmap ac <plug>(vimtex-ac)
+autocmd FileType tex xmap ic <plug>(vimtex-ic)

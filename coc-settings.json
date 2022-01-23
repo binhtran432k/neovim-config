@@ -1,6 +1,9 @@
 {
+  // (( Css ))
   "css.validate": false,
   "less.validate": false,
   "scss.validate": false,
-  "wxss.validate": false
+  "wxss.validate": false,
+  // (( Spell Checker ))
+  "cSpell.allowCompoundWords": true
 }
