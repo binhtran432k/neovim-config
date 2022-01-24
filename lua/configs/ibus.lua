@@ -1,5 +1,6 @@
-let g:ibus_us_engine = 'BambooUs::Candy'
+vim.g.ibus_us_engine = 'BambooUs::Candy'
 
+vim.cmd [[
 function! IBusOff()
   " Save current engine
   let g:ibus_prev_engine = system('ibus engine')
@@ -29,6 +30,9 @@ augroup IBusHandler
   " Make engine to English if leave insert mode
   autocmd InsertLeave * silent call IBusOff()
 augroup END
+]]
 
-" Open with english engine
-silent call IBusOff()
+-- Open with english engine
+vim.cmd [[
+  silent call IBusOff()
+]]
