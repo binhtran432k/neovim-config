@@ -1,7 +1,3 @@
-require('pre-configs')
-require('packages')
-require('coc-packages')
-require('key-bindings')
-require('configs')
-require('fix-conflicts')
-require('scripts')
+-- cache plugins
+require('impatient')
+require('bootstrap')
