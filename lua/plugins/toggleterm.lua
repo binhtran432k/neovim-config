@@ -41,6 +41,8 @@ function _G.set_terminal_keymaps()
   vim.api.nvim_buf_set_keymap(0, 't', '<M-j>', [[<C-\><C-n><Cmd>resize -4<CR>i]], opts)
   vim.api.nvim_buf_set_keymap(0, 't', '<M-k>', [[<C-\><C-n><Cmd>resize +4<CR>i]], opts)
   vim.api.nvim_buf_set_keymap(0, 't', '<M-l>', [[<C-\><C-n><Cmd>vertical resize +4<CR>i]], opts)
+  -- Fix spell check
+  vim.o.spell = false
 end
 
 -- Alternative map
