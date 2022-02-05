@@ -1,3 +1,4 @@
+-- cSpell:ignore Darazaki wbthomason goolord kyazdani42 devicons tpope akinsho lukas-reineke romgrk JoosepAlviste windwp mizlan williamboman folke hrsh7th saadparwaiz1 onsails rafamadriz mfussenegger rcarriga theHamsta Pocco81 phaazon wellle bkad karb94 andymass norcalli ahmedkhalf antoinemadec xiyaowong ludovicchabant sheerun lervag
 -- Automatically install packer
 local install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
@@ -13,7 +14,7 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
   vim.cmd [[packadd packer.nvim]]
 end
 
--- Autocommand that reloads neovim whenever you save the plugins.lua file
+-- Auto command that reloads neovim whenever you save the plugins.lua file
 vim.cmd [[
   augroup packer_user_config
     autocmd!
@@ -95,6 +96,7 @@ packer.startup {function()
   use 'neovim/nvim-lspconfig' -- Collection of configurations for built-in LSP client
   use 'williamboman/nvim-lsp-installer'
   use 'jose-elias-alvarez/null-ls.nvim' -- for formatters and linters
+  -- use '~/.config/nvim/testplugin/null-ls.nvim' -- for formatters and linters
   use 'ray-x/lsp_signature.nvim'
   use 'folke/trouble.nvim'
 

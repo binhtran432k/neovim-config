@@ -62,12 +62,12 @@ local options = {
   splitbelow = true,
   splitright = true,
   -- (( Spelling ))
-  spell = true,
-  spelllang = { 'en_us', 'vi' },
-  spelloptions = 'camel',
-  spellcapcheck = '', -- better for code checking
+  -- spell = true,
+  -- spelllang = { 'en_us', 'vi' },
+  -- spelloptions = 'camel',
+  -- spellcapcheck = '', -- better for code checking
   -- spellfile = 'en.utf-8.add',
-  -- (( Orthers ))
+  -- (( Others ))
   signcolumn = 'yes', -- display sign in column
   wrap = false, -- no wrap for long text
   scrolloff = 8, -- make cursor in middle
@@ -161,7 +161,7 @@ require('plugins.vimtex')
 
 -- require('configs.vimspector')
 
--- Fix hightlight
+-- Fix highlight
 vim.cmd [[
 highlight Whitespace guifg=#fff
 ]]

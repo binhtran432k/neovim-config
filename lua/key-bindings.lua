@@ -32,13 +32,14 @@ map('n', '<M-l>', '<Cmd>vertical resize +4<CR>', ns_opt)
 map('v', '//', [[y/\V<C-R>=escape(@",'/\')<CR><CR>]], { noremap = true })
 
 -- Search a highlighted text
+-- cSpell:ignore ymzgg mzgg
 map('v', 'ae', 'ymzggVG', { noremap = true })
 map('o', 'ae', '<Cmd>normal! mzggVG<CR>`z', { noremap = true, silent = true })
 
 -- Remove Highlight text when press <cr> if there is
 function M.smart_remove_highlight()
   if vim.opt.hlsearch['_value'] and vim.v.hlsearch == 1 then
-    return t':<C-u>nohl<CR>'
+    return t':<C-u>nohlsearch<CR>'
   else
     return t'<CR>'
   end
