@@ -1,3 +1,4 @@
+-- cSpell:ignore latexmk zathura mupdf okular
 -- Make main.tex as default latex project
 vim.cmd [[
 autocmd FileType tex let b:vimtex_main = 'main.tex'

@@ -1,3 +1,4 @@
+-- cSpell:words tele_status_ok
 local status_ok, project = pcall(require, 'project_nvim')
 if not status_ok then
   return
@@ -10,7 +11,7 @@ project.setup({
 
   on_config_done = nil,
 
-  ---@usage set to true to disable setting the current-woriking directory
+  ---@usage set to true to disable setting the current-working directory
   --- Manual mode doesn't automatically change your root directory, so you have
   --- the option to manually do so using `:ProjectRoot` command.
   manual_mode = false,
@@ -19,7 +20,7 @@ project.setup({
   --- Allowed values: **'lsp'** uses the native neovim lsp
   --- **'pattern'** uses vim-rooter like glob pattern matching. Here
   --- order matters: if one is not detected, the other is used as fallback. You
-  --- can also delete or rearangne the detection methods.
+  --- can also delete or rearrange the detection methods.
   -- detection_methods = { 'lsp', 'pattern' }, -- NOTE: lsp detection will get annoying with multiple langs in one project
   detection_methods = { 'pattern' },
 

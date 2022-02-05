@@ -26,6 +26,7 @@ toggleterm.setup({
   },
 })
 
+-- cSpell:ignore set_terminal_keymaps
 function _G.set_terminal_keymaps()
   local opts = {noremap = true, silent=true}
   -- vim.api.nvim_buf_set_keymap(0, 't', '<esc>', [[<C-\><C-n>]], opts)

@@ -1,3 +1,4 @@
+-- cSpell:ignore asdfghjklqwertyuiopzxcvbnm qwertyuiop
 require('iswap').setup{
   -- The keys that will be used as a selection, in order
   -- ('asdfghjklqwertyuiopzxcvbnm' by default)
