@@ -3,14 +3,14 @@ if not status_ok then
   return
 end
 
-local path_ok, path = pcall(require, "plenary.path")
+local path_ok, plenary_path = pcall(require, "plenary.path")
 if not path_ok then
   return
 end
 
 local dashboard = require("alpha.themes.dashboard")
 local nvim_web_devicons = require "nvim-web-devicons"
-local cdir = vim.fn.getcwd()
+local cwd_dir = vim.fn.getcwd()
 
 local function get_extension(fn)
   local match = fn:match("^.+(%..+)$")
@@ -98,9 +98,9 @@ local function mru(start, cwd, items_number, opts)
     end
 
     if(#short_fn > target_width) then
-      short_fn = path.new(short_fn):shorten(1, {-2, -1})
+      short_fn = plenary_path.new(short_fn):shorten(1, {-2, -1})
       if(#short_fn > target_width) then
-        short_fn = path.new(short_fn):shorten(1, {-1})
+        short_fn = plenary_path.new(short_fn):shorten(1, {-1})
       end
     end
 
@@ -179,7 +179,7 @@ local section_mru = {
   {
       type = "group",
       val = function()
-        return { mru(1, cdir, 9) }
+        return { mru(1, cwd_dir, 9) }
       end,
       opts = { shrink_margin = false },
     },
