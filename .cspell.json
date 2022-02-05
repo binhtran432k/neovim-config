@@ -1,0 +1,10 @@
+{
+    "dictionaries": ["vim"],
+    "dictionaryDefinitions": [
+        {
+            "name": "vim",
+            "path": "./.cspell/vim.txt",
+            "addWords": true,
+        }
+    ]
+}
