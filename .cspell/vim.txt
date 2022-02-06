@@ -7,6 +7,8 @@ blinkoff
 blinkon
 blinkwait
 blockwise
+bnext
+bprevious
 bufnr
 buftype
 cfile

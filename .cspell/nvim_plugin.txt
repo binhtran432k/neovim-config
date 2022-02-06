@@ -28,6 +28,7 @@ keymaps
 loclist
 lspconfig
 lspkind
+lspsaga
 lualine
 luasnip
 matchparen
