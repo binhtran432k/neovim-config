@@ -1,5 +1,10 @@
 -- cSpell:ignore asdfghjklqwertyuiopzxcvbnm qwertyuiop
-require('iswap').setup{
+local status_ok, iswap = pcall(require, 'iswap')
+if not status_ok then
+  return
+end
+
+iswap.setup{
   -- The keys that will be used as a selection, in order
   -- ('asdfghjklqwertyuiopzxcvbnm' by default)
   -- keys = 'qwertyuiop',

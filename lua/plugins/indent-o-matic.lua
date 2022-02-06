@@ -1,4 +1,9 @@
-require('indent-o-matic').setup {
+local status_ok, indent_o_matic = pcall(require, 'indent-o-matic')
+if not status_ok then
+  return
+end
+
+indent_o_matic.setup {
   -- The values indicated here are the defaults
 
   -- Number of lines without indentation before giving up (use -1 for infinite)

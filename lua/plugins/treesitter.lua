@@ -1,5 +1,10 @@
+local status_ok, ts_configs = pcall(require, 'nvim-treesitter.configs')
+if not status_ok then
+  return
+end
+
 -- Parsers must be installed manually via :TSInstall
-require('nvim-treesitter.configs').setup {
+ts_configs.setup {
   ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
   sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
   ignore_install = { '' }, -- List of parsers to ignore installing
@@ -83,7 +88,12 @@ for i, color in ipairs(_G.rainbow_colors) do
 end
 
 -- Treesitter context
-require('treesitter-context').setup{
+local context_status_ok, ts_context = pcall(require, 'treesitter-context')
+if not context_status_ok then
+  return
+end
+
+ts_context.setup{
   enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
   throttle = true, -- Throttles plugin updates (may improve performance)
   max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
