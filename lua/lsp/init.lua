@@ -6,4 +6,5 @@ end
 require 'lsp.lsp-signature'
 require 'lsp.lsp-installer'
 require('lsp.handlers').setup()
+require('lsp.diagnostic')
 require 'lsp.null-ls'
