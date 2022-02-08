@@ -30,9 +30,9 @@ vim.cmd [[
 -- URL handling
 local url_handling_cmd = ''
 if vim.fn.has("mac") == 1 then
-  url_handling_cmd = '<Cmd>call jobstart(["open", expand("<cfile>")], {"detach": v:true})<CR>'
+  url_handling_cmd = '<Cmd>call jobstart(["open", expand(expand("<cfile>"))], {"detach": v:true})<CR>'
 elseif vim.fn.has("unix") == 1 then
-  url_handling_cmd = '<Cmd>call jobstart(["xdg-open", expand("<cfile>")], {"detach": v:true})<CR>'
+  url_handling_cmd = '<Cmd>call jobstart(["xdg-open", expand(expand("<cfile>"))], {"detach": v:true})<CR>'
 else
   url_handling_cmd = '<Cmd>lua print("Error: gx is not supported on this OS!")<CR>'
 end
