@@ -4,8 +4,8 @@ if not status_ok then
 end
 
 -- Parsers must be installed manually via :TSInstall
-ts_configs.setup {
-  ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+ts_configs.setup({
+  ensure_installed = 'maintained', -- one of "all", "maintained" (parsers with maintainers), or a list of languages
   sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
   ignore_install = { '' }, -- List of parsers to ignore installing
   highlight = {
@@ -80,7 +80,7 @@ ts_configs.setup {
     -- disable = { "c", "ruby" }, -- optional, list of language that will be disabled
     -- [options]
   },
-}
+})
 
 -- Apply my rainbow color to treesitter rainbow
 for i, color in ipairs(_G.rainbow_colors) do
@@ -93,7 +93,7 @@ if not context_status_ok then
   return
 end
 
-ts_context.setup{
+ts_context.setup({
   enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
   throttle = true, -- Throttles plugin updates (may improve performance)
   max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
@@ -123,5 +123,5 @@ ts_context.setup{
     -- Treat patterns.rust as a Lua pattern (i.e "^impl_item$" will
     -- exactly match "impl_item" only)
     -- rust = true,
-  }
-}
+  },
+})

@@ -4,7 +4,7 @@ if not status_ok then
   return
 end
 
-autopairs.setup {
+autopairs.setup({
   check_ts = true,
   ts_config = {
     lua = { 'string', 'source' },
@@ -23,31 +23,36 @@ autopairs.setup {
     highlight = 'Search',
     highlight_grey = 'Comment',
   },
-}
+})
 
-local Rule   = require'nvim-autopairs.rule'
-autopairs.add_rules {
-  Rule(' ', ' ')
-    :with_pair(function (opts)
-      local pair = opts.line:sub(opts.col - 1, opts.col)
-      return vim.tbl_contains({ '()', '[]', '{}' }, pair)
-    end),
+local Rule = require('nvim-autopairs.rule')
+autopairs.add_rules({
+  Rule(' ', ' '):with_pair(function(opts)
+    local pair = opts.line:sub(opts.col - 1, opts.col)
+    return vim.tbl_contains({ '()', '[]', '{}' }, pair)
+  end),
   Rule('( ', ' )')
-    :with_pair(function() return false end)
+    :with_pair(function()
+      return false
+    end)
     :with_move(function(opts)
       return opts.prev_char:match('.%)') ~= nil
     end)
     :use_key(')'),
   Rule('{ ', ' }')
-    :with_pair(function() return false end)
+    :with_pair(function()
+      return false
+    end)
     :with_move(function(opts)
       return opts.prev_char:match('.%}') ~= nil
     end)
     :use_key('}'),
   Rule('[ ', ' ]')
-    :with_pair(function() return false end)
+    :with_pair(function()
+      return false
+    end)
     :with_move(function(opts)
       return opts.prev_char:match('.%]') ~= nil
     end)
-    :use_key(']')
-}
+    :use_key(']'),
+})

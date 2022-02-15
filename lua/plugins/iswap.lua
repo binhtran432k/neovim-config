@@ -4,7 +4,7 @@ if not status_ok then
   return
 end
 
-iswap.setup{
+iswap.setup({
   -- The keys that will be used as a selection, in order
   -- ('asdfghjklqwertyuiopzxcvbnm' by default)
   -- keys = 'qwertyuiop',
@@ -28,7 +28,12 @@ iswap.setup{
   -- Automatically swap with only two arguments
   -- default nil
   -- autoswap = true
-}
+})
 
-vim.api.nvim_set_keymap('n', '<leader>A', '<Cmd>ISwapWith<CR>', { noremap = true })
+vim.api.nvim_set_keymap(
+  'n',
+  '<leader>A',
+  '<Cmd>ISwapWith<CR>',
+  { noremap = true }
+)
 vim.api.nvim_set_keymap('n', '<leader>a', '<Cmd>ISwap<CR>', { noremap = true })

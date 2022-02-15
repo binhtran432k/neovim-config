@@ -100,23 +100,23 @@ end
 
 -- Save last cursor position and folding
 vim.opt.viewoptions:remove('options')
-vim.cmd [[
+vim.cmd([[
 augroup remember_folds
   autocmd!
   autocmd BufWinLeave *.* if &ft !=# 'help' | mkview | endif
   autocmd BufWinEnter *.* if &ft !=# 'help' | silent! loadview | endif
 augroup END
-]]
+]])
 
 -- Auto reload content changed outside
-vim.cmd [[
+vim.cmd([[
 au CursorHold,CursorHoldI * checktime
 au FocusGained,BufEnter * :checktime
 autocmd FocusGained,BufEnter,CursorHold,CursorHoldI *
   \ if mode() !~ '\v(c|r.?|!|t)' && getcmdwintype() == '' | checktime | endif
 autocmd FileChangedShellPost *
   \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
-]]
+]])
 
 -- Disable automatic comment in newline
 -- vim.cmd [[
@@ -162,6 +162,6 @@ require('plugins.vimtex')
 -- require('configs.vimspector')
 
 -- Fix highlight
-vim.cmd [[
+vim.cmd([[
 highlight Whitespace guifg=#fff
-]]
+]])

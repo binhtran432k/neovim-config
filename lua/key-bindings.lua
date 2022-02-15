@@ -22,7 +22,7 @@ map('n', '<C-k>', '<C-w>k', { noremap = true })
 map('n', '<C-l>', '<C-w>l', { noremap = true })
 
 -- Resize pane
-local ns_opt = { noremap = true, silent = true, }
+local ns_opt = { noremap = true, silent = true }
 map('n', '<M-h>', '<Cmd>vertical resize -4<CR>', ns_opt)
 map('n', '<M-j>', '<Cmd>resize -4<CR>', ns_opt)
 map('n', '<M-k>', '<Cmd>resize +4<CR>', ns_opt)
@@ -39,14 +39,18 @@ map('o', 'ae', '<Cmd>normal! mzggVG<CR>`z', { noremap = true, silent = true })
 -- Remove Highlight text when press <cr> if there is
 function M.smart_remove_highlight()
   if vim.opt.hlsearch['_value'] and vim.v.hlsearch == 1 then
-    return t':<C-u>nohlsearch<CR>'
+    return t(':<C-u>nohlsearch<CR>')
   else
-    return t'<CR>'
+    return t('<CR>')
   end
 end
 
-map('n', '<CR>', 'v:lua.require("key-bindings").smart_remove_highlight()',
-  { expr = true, noremap = true, silent = true })
+map(
+  'n',
+  '<CR>',
+  'v:lua.require("key-bindings").smart_remove_highlight()',
+  { expr = true, noremap = true, silent = true }
+)
 
 -- Paste with formatting
 map('n', '<C-p>', 'p`[v`]=', { noremap = true })

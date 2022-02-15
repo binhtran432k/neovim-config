@@ -1,4 +1,4 @@
-local status_ok, nvim_tree = pcall(require, "nvim-tree")
+local status_ok, nvim_tree = pcall(require, 'nvim-tree')
 if not status_ok then
   return
 end
@@ -10,14 +10,14 @@ end
 --
 -- local tree_cb = nvim_tree_config.nvim_tree_callback
 
-nvim_tree.setup {
+nvim_tree.setup({
   disable_netrw = true,
   hijack_netrw = true,
   open_on_setup = false,
   ignore_ft_on_setup = {
-    "startify",
-    "dashboard",
-    "alpha",
+    'startify',
+    'dashboard',
+    'alpha',
   },
   auto_close = true,
   open_on_tab = false,
@@ -30,24 +30,24 @@ nvim_tree.setup {
   diagnostics = {
     enable = true,
     icons = {
-      hint = "",
-      info = "",
-      warning = "",
-      error = "",
-    }
+      hint = '',
+      info = '',
+      warning = '',
+      error = '',
+    },
   },
   update_focused_file = {
     enable = true,
     update_cwd = true,
-    ignore_list = {}
+    ignore_list = {},
   },
   system_open = {
     cmd = nil,
-    args = {}
+    args = {},
   },
   filters = {
     dotfiles = false,
-    custom = {}
+    custom = {},
   },
   git = {
     enable = true,
@@ -64,17 +64,22 @@ nvim_tree.setup {
       custom_only = false,
       list = {
         { key = { 'l' }, action = 'cd' },
-        { key = { 'h' }, action = 'parent_node' }
-      }
+        { key = { 'h' }, action = 'parent_node' },
+      },
     },
     number = true,
     relativenumber = true,
-    signcolumn = "yes"
+    signcolumn = 'yes',
   },
   trash = {
-    cmd = "trash",
-    require_confirm = true
-  }
-}
+    cmd = 'trash',
+    require_confirm = true,
+  },
+})
 
-vim.api.nvim_set_keymap('n', '<C-n>', '<Cmd>NvimTreeToggle<CR>', { noremap = true })
+vim.api.nvim_set_keymap(
+  'n',
+  '<C-n>',
+  '<Cmd>NvimTreeToggle<CR>',
+  { noremap = true }
+)

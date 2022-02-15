@@ -15,7 +15,7 @@ require('luasnip/loaders/from_vscode').lazy_load()
 --   return col == 0 or vim.fn.getline('.'):sub(col, col):match '%s'
 -- end
 
-cmp.setup {
+cmp.setup({
   snippet = {
     expand = function(args)
       luasnip.lsp_expand(args.body)
@@ -25,7 +25,8 @@ cmp.setup {
     format = function(entry, vim_item)
       -- fancy icons and a name of kind
       vim_item.kind = require('lspkind').presets.default[vim_item.kind]
-        .. ' ' .. vim_item.kind
+        .. ' '
+        .. vim_item.kind
       -- set a name for each source
       vim_item.menu = ({
         luasnip = '[Snippet]',
@@ -37,26 +38,25 @@ cmp.setup {
         spell = '[Spell]',
       })[entry.source.name]
       return vim_item
-    end
+    end,
   },
   mapping = {
     ['<C-p>'] = cmp.mapping(cmp.mapping.select_prev_item(), { 'i', 'c' }),
     ['<C-n>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 'c' }),
     ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
     ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
-    ['<C-Space>'] = cmp.mapping(function ()
+    ['<C-Space>'] = cmp.mapping(function()
       if cmp.visible() then
         cmp.close()
       else
         cmp.complete()
       end
-    end,
-    { 'i', 'c' }),
+    end, { 'i', 'c' }),
     ['<C-e>'] = {
       i = cmp.mapping.abort(),
       c = cmp.mapping.close(),
     },
-    ['<CR>'] = cmp.mapping.confirm({ select = true, }),
+    ['<CR>'] = cmp.mapping.confirm({ select = true }),
     ['<Tab>'] = function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
@@ -82,18 +82,18 @@ cmp.setup {
     { name = 'luasnip' },
     { name = 'buffer' },
     { name = 'path' },
-    { name = 'spell' }
+    { name = 'spell' },
   },
   confirm_opts = {
     behavior = cmp.ConfirmBehavior.Replace,
     select = false,
   },
   documentation = {
-  	border = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
+    border = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
   },
   experimental = {
     ghost_text = true,
     native_menu = false,
   },
   completion = { completeopt = 'menu,menuone,noinsert' },
-}
+})

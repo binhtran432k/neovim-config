@@ -1,11 +1,21 @@
-local status_ok, neoscroll = pcall(require, "neoscroll")
+local status_ok, neoscroll = pcall(require, 'neoscroll')
 if not status_ok then
   return
 end
 
-neoscroll.setup {
+neoscroll.setup({
   -- All these keys will be mapped to their corresponding default scrolling animation
-  mappings = { "<C-u>", "<C-d>", "<C-b>", "<C-f>", "<C-y>", "<C-e>", "zt", "zz", "zb" },
+  mappings = {
+    '<C-u>',
+    '<C-d>',
+    '<C-b>',
+    '<C-f>',
+    '<C-y>',
+    '<C-e>',
+    'zt',
+    'zz',
+    'zb',
+  },
   hide_cursor = true, -- Hide cursor while scrolling
   stop_eof = true, -- Stop at <EOF> when scrolling downwards
   use_local_scrolloff = false, -- Use the local scope of scrolloff instead of the global scope
@@ -14,11 +24,11 @@ neoscroll.setup {
   easing_function = nil, -- Default easing function
   pre_hook = nil, -- Function to run before the scrolling animation starts
   post_hook = nil, -- Function to run after the scrolling animation ends
-}
+})
 
 local t = {}
 -- Syntax: t[keys] = {function, {function arguments}}
-t['<C-u>'] = {'scroll', {'-vim.wo.scroll', 'true', '150'}}
-t['<C-d>'] = {'scroll', { 'vim.wo.scroll', 'true', '150'}}
+t['<C-u>'] = { 'scroll', { '-vim.wo.scroll', 'true', '150' } }
+t['<C-d>'] = { 'scroll', { 'vim.wo.scroll', 'true', '150' } }
 
 require('neoscroll.config').set_mappings(t)

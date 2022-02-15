@@ -3,8 +3,8 @@ if not status_ok then
   return
 end
 
-require 'lsp.lsp-signature'
-require 'lsp.lsp-installer'
+require('lsp.lsp-signature')
+require('lsp.lsp-installer')
 require('lsp.handlers').setup()
 require('lsp.diagnostic')
-require 'lsp.null-ls'
+require('lsp.null-ls')

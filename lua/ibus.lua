@@ -20,7 +20,7 @@ function M.trigger_ibus_on()
   end
 end
 
-vim.cmd [[
+vim.cmd([[
 augroup ibus_handler
   " Restore engine for search
   autocmd CmdLineEnter [/?] silent lua require('ibus').trigger_ibus_on()
@@ -34,6 +34,6 @@ augroup ibus_handler
   " Make engine off in startup
   autocmd VimEnter * silent lua require('ibus').trigger_ibus_off()
 augroup END
-]]
+]])
 
 return M

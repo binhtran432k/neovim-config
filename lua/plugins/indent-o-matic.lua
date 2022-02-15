@@ -3,7 +3,7 @@ if not status_ok then
   return
 end
 
-indent_o_matic.setup {
+indent_o_matic.setup({
   -- The values indicated here are the defaults
 
   -- Number of lines without indentation before giving up (use -1 for infinite)
@@ -11,4 +11,4 @@ indent_o_matic.setup {
 
   -- Space indentations that should be detected
   standard_widths = { 2, 4, 8 },
-}
+})
