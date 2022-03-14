@@ -1,8 +1,0 @@
-require('pre-configs')
-require('plugins')
-require('key-bindings')
-require('configs')
-require('scripts')
-require('keymap')
-require('ibus')
-require('fix-conflicts')

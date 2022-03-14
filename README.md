@@ -1,9 +1,13 @@
 # neovim-config
+
 ## Inspiration
+
 - https://github.com/axieax/dotconfig
 - https://github.com/rockerBOO/awesome-neovim
 - https://github.com/ChristianChiarulli/nvim
+
 ## TODO
+
 - [ ] Migrate to OOP design
 - [ ] Use lazy loading in plugins
 - [ ] Fix nvim-polyglot(Markdown): gx -> Unknown function netrw#BrowserX
