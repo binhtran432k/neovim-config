@@ -8,16 +8,16 @@
 
 ## TODO
 
-- [ ] Migrate to OOP design
-- [ ] Use lazy loading in plugins
-- [ ] Fix nvim-polyglot(Markdown): gx -> Unknown function netrw#BrowserX
-- [ ] Fix conflict key mapping
-- [ ] Setup stylua
+- [x] Migrate to OOP design
+- [x] Use lazy loading in plugins
+- [x] Fix nvim-polyglot(Markdown): gx -> Unknown function netrw#BrowserX
+- [x] Fix conflict key mapping
+- [x] Setup stylua
+- [x] Add https://github.com/rhysd/conflict-marker.vim
+- [x] Add https://github.com/SmiteshP/nvim-gps
+- [x] Add https://github.com/tpope/vim-repeat
+- [x] Add todo mapping
+- [x] Create cspell suggestion
+- [ ] Label all which-key
 - [ ] Setup nvim-dap
 - [ ] Add https://github.com/arthurxavierx/vim-caser
-- [ ] Add https://github.com/rhysd/conflict-marker.vim
-- [ ] Add https://github.com/SmiteshP/nvim-gps
-- [ ] Add https://github.com/tpope/vim-repeat
-- [ ] Add todo mapping
-- [ ] Create cspell suggestion
-- [ ] Label all which-key
